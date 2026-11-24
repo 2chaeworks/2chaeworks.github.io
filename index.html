@@ -181,8 +181,6 @@ p{margin:0 0 1em;max-width:36em}
 .ptog{grid-column:-2 / -1;justify-self:end;color:var(--dim);font-size:20px;line-height:1}
 .ptog::after{content:'+'}.pstep[open] .ptog::after{content:'−'}
 .pbody{padding-bottom:clamp(28px,5vh,48px)}
-.pstep.lead .psum h3{font-size:clamp(28px,3.4vw,48px);line-height:1.15;color:var(--ac)}
-.pstep.lead .pbody .body p:first-child{font-size:15px}
 @media(max-width:760px){.psum{grid-template-columns:2.6em 1fr auto}.psum .label,.psum .body{grid-column:auto}.ptog{grid-column:auto}}
 .pstep:last-child{border-bottom:1px solid var(--line)}
 .pno{color:var(--ac)}
@@ -271,7 +269,7 @@ const PROJECTS=[{
   /* 과정: 기본 화면은 네 구간 축약본, '자세히'를 누르면 상세본. 원고는 사용자 제공(작업 과정 원고, 2026.11.24).
      imgs: 각 묶음은 한 줄에 놓일 이미지들(펼침면은 두 장). 이미지가 없으면 그 자리는 그리지 않는다. */
   process:[
-    {no:'01',title:'한 권에서 네 가지 매체로',lead:true, /* 처음부터 펼쳐 두고 크게: 내 선택의 시작점 */
+    {no:'01',title:'한 권에서 네 가지 매체로',
      text:['사소한 내용을 권위적인 형식에 담았던 《권위적인 책》에서 출발했다. 졸업작품에서는 일상 상황 100가지를 설명서, 연구 보고서, 매거진, 신문으로 나누어 재구성했다. 한 권 안에서 다루던 내용과 형식의 간극을 네 매체 사이에서 비교할 수 있도록 확장했다.',
        '소재는 삼각김밥을 뜯거나 짧은 답장의 끝 글자를 고르는 것처럼 익숙한 상황에서 찾았다. 평소에는 설명 없이 지나가지만, 막상 말로 옮기면 행동과 판단의 단계가 드러나는 장면들이었다.'],
      imgs:[{srcs:['img/authority/024.webp','img/authority/025.webp'],ratio:'170/245'},{srcs:['img/authority/030.webp','img/authority/031.webp'],ratio:'170/245'},{srcs:['img/authority/064.webp','img/authority/065.webp'],ratio:'170/245'}],
