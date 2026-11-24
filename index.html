@@ -72,7 +72,7 @@ p{margin:0 0 1em;max-width:36em}
 @keyframes flow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 /* 커서 표정: 클릭(탭)할 때마다 143개 중 다른 표정으로 바뀐다 */
 .cur{position:fixed;left:0;top:0;pointer-events:none;z-index:30;font-size:14px;white-space:nowrap;color:var(--ink);transform:translate(-100px,-100px);transition:opacity .2s}
-@media(hover:none){.cur{opacity:0}.cur.tap{opacity:1}}
+@media(hover:none){.cur{display:none}}
 @media(prefers-reduced-motion:reduce){.flow div span{animation:none}body,header{transition:none}}
 .index{width:100%;border-collapse:collapse}
 .index th{font-weight:var(--w);color:var(--dim);text-align:left;padding:0 12px 12px 0}
@@ -100,9 +100,10 @@ p{margin:0 0 1em;max-width:36em}
 .ph img{width:100%;height:100%;object-fit:contain;display:block}
 .ph.has{border:0;background:none;padding:0}
 @media(max-width:760px){.scale figcaption .dim{display:none}}
-.case{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);align-items:end}
+/* 예시 네 개를 같은 높이로: 가로 폭을 각 이미지 비율만큼 나눠 가짐 */
+.case{display:flex;gap:var(--gap);align-items:flex-start}
 .case figure{margin:0}.case figcaption{margin-top:10px;font-size:12px}.case figcaption b{display:block;font-weight:var(--w);color:var(--ac)}
-@media(max-width:760px){.case{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:8px}.case figure{flex:0 0 72%;scroll-snap-align:start}}
+@media(max-width:760px){.case{overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:8px}.case figure{flex:none!important;scroll-snap-align:start}.case .caseimg{height:300px}.case .caseimg img{height:100%;width:auto}}
 .steps{list-style:none;margin:0;padding:0}
 .steps li{display:grid;grid-template-columns:8em 1fr;gap:16px;padding:10px 0;border-top:1px solid var(--line)}
 .steps li:last-child{border-bottom:1px solid var(--line)}
@@ -310,7 +311,7 @@ function project(p){
     <div class="side">${dl(p.info)}</div></div></section>
   <section class="pad"><div class="grid" style="margin-bottom:32px"><div class="label">예시</div>
     <div class="body"><h2 class="big">${esc(p.caseTitle)}</h2><p class="dim" style="margin-top:10px">${esc(p.caseText)}</p></div></div>
-    <div class="case">${p.media.map(m=>`<figure><button class="zoomable caseimg" type="button" data-lb='${esc(JSON.stringify([m.caseImg]))}' aria-label="${esc(m.name)} ${esc(m.casePage)} 크게 보기">${m.caseImg.map(src=>`<img src="${esc(src)}" alt="${esc(m.name)} ${esc(m.casePage)}" loading="lazy" style="aspect-ratio:${m.w}/${m.h}">`).join('')}</button><figcaption><b>${esc(m.name)} · ${esc(m.casePage)}</b>${esc(m.caseNote)}</figcaption></figure>`).join('')}</div></section>
+    <div class="case">${p.media.map(m=>`<figure style="flex:${(m.caseImg.length*m.w/m.h).toFixed(3)} 1 0"><button class="zoomable caseimg" type="button" data-lb='${esc(JSON.stringify([m.caseImg]))}' aria-label="${esc(m.name)} ${esc(m.casePage)} 크게 보기">${m.caseImg.map(src=>`<img src="${esc(src)}" alt="${esc(m.name)} ${esc(m.casePage)}" loading="lazy" style="aspect-ratio:${m.w}/${m.h}">`).join('')}</button><figcaption><b>${esc(m.name)} · ${esc(m.casePage)}</b>${esc(m.caseNote)}</figcaption></figure>`).join('')}</div></section>
   <section class="pad"><div class="grid"><div class="label">출발점</div><div class="body">
     ${steps(p.origin)}
     <p style="margin-top:28px">${esc(p.method)}</p>
@@ -413,7 +414,7 @@ let curFace='(=u=)';cur.textContent=curFace;
 const nextFace=()=>{let f;do{f=ALL_FACES[Math.floor(Math.random()*ALL_FACES.length)]}while(f===curFace);curFace=f;cur.textContent=f};
 const moveCur=(x,y)=>{cur.style.transform=`translate(${x+14}px,${y+14}px)`};
 addEventListener('pointermove',e=>{if(e.pointerType==='mouse')moveCur(e.clientX,e.clientY)});
-addEventListener('pointerdown',e=>{nextFace();moveCur(e.clientX,e.clientY);if(e.pointerType!=='mouse'){cur.classList.add('tap');clearTimeout(cur._t);cur._t=setTimeout(()=>cur.classList.remove('tap'),900)}});
+addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;nextFace();moveCur(e.clientX,e.clientY)}); /* 폰·태블릿(터치)에서는 표정 커서 없음 */
 const setFace=m=>{const[e,d]=EYE[curView];face.textContent=`!(${e}${m||d}${e})♡`};
 app.addEventListener('click',e=>{const r=e.target.closest('tr[data-go]');if(r&&!e.target.closest('a'))location.hash=r.dataset.go});
 app.addEventListener('keydown',e=>{const r=e.target.closest('tr[data-go]');if(r&&e.key==='Enter')location.hash=r.dataset.go});
