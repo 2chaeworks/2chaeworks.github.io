@@ -33,7 +33,9 @@
 body[data-theme=pink]{--bg:#f03a9a;--ink:#10281a;--dim:#10281a;--line:rgba(16,40,26,.28);--ac:#10281a;--hover:rgba(16,40,26,.06)}
 body[data-theme=black]{--bg:#0d0d0d;--ink:#ededed;--dim:#7d7d7d;--line:#262626;--ac:#93d897;--hover:#151515}
 /* 민트: 글자는 핑크 한 가지. 명함 핑크(#f03a9a)는 민트 위에서 너무 흐려 한 톤만 짙게 */
-body[data-theme=mint]{--bg:#9eddba;--ink:#d61a80;--dim:#d61a80;--line:rgba(214,26,128,.35);--ac:#d61a80;--hover:rgba(214,26,128,.05)}
+body[data-theme=mint]{--bg:#9eddba;--ink:#7d0f40;--dim:#8f1146;--line:rgba(214,26,128,.35);--ac:#d61a80;--hover:rgba(214,26,128,.05)}
+/* 민트: 큰 글자·포인트는 분홍, 작은 본문·날짜는 짙은 색으로 읽기 쉽게 */
+body[data-theme=mint] .big{color:var(--ac)}
 body[data-theme=white]{--bg:#ffffff;--ink:#231f20;--dim:#868485;--line:#e0e0e0;--ac:#231f20;--hover:#f6f6f6}
 *{box-sizing:border-box;min-width:0}
 html{scroll-padding-top:90px}
@@ -66,7 +68,7 @@ p{margin:0 0 1em;max-width:36em}
 
 /* Work 목록 (메인) */
 .work{min-height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(40px,8vh,96px)}
-.flow{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(28px,6vh,64px);margin:0 calc(-1*var(--pad)) clamp(32px,6vh,64px);overflow:hidden;font-size:12px;color:var(--line);user-select:none;white-space:nowrap;word-spacing:1.4em}
+.flow{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(28px,6vh,64px);margin:0 calc(-1*var(--pad)) clamp(32px,6vh,64px);overflow:hidden;font-size:12px;color:var(--flow,#b4b4b4);user-select:none;white-space:nowrap;word-spacing:1.4em}
 /* 방향은 한쪽으로 통일, 줄마다 속도만 조금씩 다르게 */
 .flow div span{display:inline-block;animation:flow var(--sp,140s) linear infinite}
 @keyframes flow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -166,9 +168,10 @@ p{margin:0 0 1em;max-width:36em}
 .slot b{font-weight:var(--w);color:#8a8a8a}
 @media(max-width:760px){.photos figure{grid-column:1 / -1!important}}
 /* 과정 */
-.pmethod{padding:clamp(32px,6vh,64px) 0;border-top:1px solid var(--line)}
-.mtitle{font-size:clamp(28px,3.6vw,52px);line-height:1.15;color:var(--ac);margin-bottom:24px}
-.pmethod p{max-width:40em;font-size:14px}
+.pmethod{border-top:1px solid var(--line)}
+.pmethod{padding:clamp(20px,3.5vh,32px) 0}
+.mtitle{font-size:15px;line-height:1.4;color:var(--ink);margin-bottom:10px}
+.pmethod p{max-width:40em;font-size:13px;color:var(--dim);margin-bottom:.6em}
 /* 01–04는 제목만 보이고, 누르면 펼쳐진다 */
 .pstep{border-top:1px solid var(--line)}
 .psum{list-style:none;cursor:pointer;padding:clamp(20px,3.5vh,32px) 0;align-items:baseline}
@@ -178,6 +181,8 @@ p{margin:0 0 1em;max-width:36em}
 .ptog{grid-column:-2 / -1;justify-self:end;color:var(--dim);font-size:20px;line-height:1}
 .ptog::after{content:'+'}.pstep[open] .ptog::after{content:'−'}
 .pbody{padding-bottom:clamp(28px,5vh,48px)}
+.pstep.lead .psum h3{font-size:clamp(28px,3.4vw,48px);line-height:1.15;color:var(--ac)}
+.pstep.lead .pbody .body p:first-child{font-size:15px}
 @media(max-width:760px){.psum{grid-template-columns:2.6em 1fr auto}.psum .label,.psum .body{grid-column:auto}.ptog{grid-column:auto}}
 .pstep:last-child{border-bottom:1px solid var(--line)}
 .pno{color:var(--ac)}
@@ -187,11 +192,6 @@ p{margin:0 0 1em;max-width:36em}
 .ptable td{padding:10px 10px 10px 0;border-top:1px solid var(--line);vertical-align:top}
 .ptable td:first-child{color:var(--ac);white-space:nowrap}
 @media(max-width:560px){.ptable thead{display:none}.ptable tr{display:grid;padding:10px 0;border-top:1px solid var(--line)}.ptable td{border:0;padding:2px 0}}
-details.more{margin-top:18px}
-.more summary{cursor:pointer;color:var(--dim);font-size:12px;list-style:none;display:inline-block;border-bottom:1px solid var(--line);padding-bottom:2px}
-.more summary::-webkit-details-marker{display:none}
-.more summary::after{content:' +'}.more[open] summary::after{content:' −'}
-.more[open] summary{margin-bottom:16px}
 .pimgs{display:flex;gap:var(--gap);align-items:flex-start;margin-top:12px}
 .pimgs figure{margin:0}
 .pgroup{display:flex;gap:2px}.pgroup img{flex:1;min-width:0;width:100%;display:block;background:#fff}
@@ -271,36 +271,28 @@ const PROJECTS=[{
   /* 과정: 기본 화면은 네 구간 축약본, '자세히'를 누르면 상세본. 원고는 사용자 제공(작업 과정 원고, 2026.11.24).
      imgs: 각 묶음은 한 줄에 놓일 이미지들(펼침면은 두 장). 이미지가 없으면 그 자리는 그리지 않는다. */
   process:[
-    {no:'01',title:'한 권에서 네 가지 매체로',
-     text:'사소한 내용을 권위적인 형식에 담았던 《권위적인 책》에서 출발했다. 졸업작품에서는 일상 상황 100가지를 설명서, 연구 보고서, 매거진, 신문으로 나누어 재구성했다. 한 권 안에서 다루던 내용과 형식의 간극을 네 매체 사이에서 비교할 수 있도록 확장했다.',
-     detail:['《말투의 형태》는 1학기에 제작한 《권위적인 책》에서 출발했다. 사소한 내용을 진지한 문장과 정돈된 지면에 담았을 때, 내용의 무게와 형식의 무게가 어긋나는 순간에 주목했다.',
-       '졸업작품에서는 이 차이를 여러 매체 사이에서 비교하고자 했다. 한 권에 모으던 내용을 설명서, 연구 보고서, 매거진, 신문으로 나누고, 각 매체의 관습에 맞춰 다시 구성했다. 문장의 어조뿐 아니라 판형, 정보의 순서, 글자의 크기와 밀도까지 변주의 대상으로 삼았다.',
-       '소재는 삼각김밥을 뜯거나 짧은 답장의 끝 글자를 고르는 것처럼 익숙한 상황에서 찾았다. 평소에는 설명 없이 지나가지만, 막상 말로 옮기면 행동과 판단의 단계가 드러나는 장면들이었다. 이를 일상 상황 100가지로 확장했다.'],
+    {no:'01',title:'한 권에서 네 가지 매체로',lead:true, /* 처음부터 펼쳐 두고 크게: 내 선택의 시작점 */
+     text:['사소한 내용을 권위적인 형식에 담았던 《권위적인 책》에서 출발했다. 졸업작품에서는 일상 상황 100가지를 설명서, 연구 보고서, 매거진, 신문으로 나누어 재구성했다. 한 권 안에서 다루던 내용과 형식의 간극을 네 매체 사이에서 비교할 수 있도록 확장했다.',
+       '소재는 삼각김밥을 뜯거나 짧은 답장의 끝 글자를 고르는 것처럼 익숙한 상황에서 찾았다. 평소에는 설명 없이 지나가지만, 막상 말로 옮기면 행동과 판단의 단계가 드러나는 장면들이었다.'],
      imgs:[{srcs:['img/authority/024.webp','img/authority/025.webp'],ratio:'170/245'},{srcs:['img/authority/030.webp','img/authority/031.webp'],ratio:'170/245'},{srcs:['img/authority/064.webp','img/authority/065.webp'],ratio:'170/245'}],
      cap:'출발점이 된 1학기 디자인스튜디오I 《권위적인 책》 작업 파일 일부. 170 × 245mm, 제작 중 중단.'},
     {no:'02',title:'같은 소재, 다른 질문',
-     text:'공통 사례 번호를 유지하면서 매체마다 다른 질문을 던졌다. 설명서는 행동의 순서를, 보고서는 판단의 조건을, 매거진은 읽고 싶은 이야기를, 신문은 사건과 쟁점을 중심에 두었다. 글을 그대로 옮기는 대신 매체에 맞춰 다시 쓰고, 분류와 분량을 조정했다.',
+     text:['공통 사례 번호를 유지하면서 매체마다 다른 질문을 던졌다. 글을 그대로 옮기는 대신 매체에 맞춰 다시 쓰고, 분류와 분량을 조정했다.',
+       '《세세》는 100가지 사례를 다섯 범주로 나누어 대표 사례 10개를 상세 분석하고, 《속속》은 24가지 소재를 골라 여섯 주제의 지면으로 묶었다. 모든 소재를 같은 분량으로 반복하기보다 매체마다 다루는 깊이와 범위를 달리했다.'],
      table:[['소소 · 설명서','무엇을 어떤 순서로 해야 하는가?','준비물, 행동 단계, 주의 사항, 확인 항목, 결과'],
             ['세세 · 연구 보고서','어떤 조건이 달라지면 판단이 바뀌는가?','기준 상황, 조건 비교, 해석, 예외와 한계'],
             ['찬찬 · 매거진','이 장면에서 어떤 이야기를 더 읽고 싶은가?','인터뷰, 특집, 테스트, 짧은 이야기'],
             ['속속 · 신문','무슨 일이 있었고, 무엇을 크게 다룰 것인가?','제목, 리드문, 본문, 관련 보도, 도해']],
-     detail:['각 상황에는 번호와 기호를 붙였다. 번호는 매체가 달라져도 같은 소재를 다시 찾을 수 있는 기준이 됐다. 《소소》에서 순서대로 다룬 상황을 《세세》에서는 판단의 조건에 따라 재분류하고, 《속속》에서는 관련된 사건끼리 묶었다. 소재의 연결은 유지하면서 읽는 순서를 바꾸었다.',
-       '매체를 나누는 일은 같은 원고에 다른 레이아웃을 적용하는 것으로 끝나지 않았다. 각 형식이 어떤 정보를 요구하는지 정하고, 그에 맞춰 글을 다시 썼다.',
-       '《세세》는 100가지 사례를 다섯 범주로 나누고, 대표 사례 10개를 상세 분석했다. 나머지 90개는 비교 기록으로 압축했다. 《속속》은 24가지 소재를 선별해 여섯 주제의 지면으로 구성했다. 모든 소재를 같은 분량으로 반복하기보다 매체마다 다루는 깊이와 범위를 달리했다.'],
      imgs:[],cap:'같은 소재가 매체마다 어떻게 바뀌는지는 위의 CASE 062 예시에서 볼 수 있다.'},
     {no:'03',title:'밀도와 크기로 읽기를 조정하다',
-     text:'《소소》는 작은 판형에 단계와 도식을 촘촘히 배치하고, 《찬찬》은 긴 인터뷰와 짧은 이야기 사이에 리듬을 만들었다. 네 매체의 판형도 달리해 손 가까이에서 확인하거나 넓게 펼쳐 읽는 차이를 만들었다. 판형과 조판을 읽기의 조건으로 다뤘다.',
+     text:['《소소》는 작은 판형에 단계와 도식을 촘촘히 배치하고, 《찬찬》은 긴 인터뷰와 짧은 이야기 사이에 리듬을 만들었다. 판형과 조판을 읽기의 조건으로 다뤘다.',
+       '네 매체의 판형도 달리했다. 크기의 차이는 내용의 중요도를 구분하기 위한 것이 아니라, 같은 일상에 서로 다른 면적과 읽는 자세를 부여하기 위한 선택이었다.'],
      posture:true,
-     detail:['《소소》에서는 설명서의 성격이 충분히 드러나도록 정보 밀도를 조정했다. 작은 판형 안에 단계와 도식, 보조 정보를 촘촘히 배치하되, 반복되는 표제와 번호로 필요한 내용을 찾을 수 있도록 구성했다. 도식에 등장하는 사람 아이콘과 기호의 표현도 맞추었다.',
-       '《찬찬》에서는 읽을거리의 종류와 길이를 조정했다. 인트로를 줄이고, 반복되거나 재미가 약한 내용을 교체하면서 긴 인터뷰와 짧은 이야기, 직접 선택해 보는 콘텐츠를 섞었다. 최종 구성에 맞춰 목차도 다시 정리했다. 같은 프로젝트 안에서도 설명서는 필요한 항목을 확인하게 하고, 매거진은 관심이 생긴 장면에 머물게 하고자 했다.',
-       '형식의 차이가 화면 속 레이아웃에만 머물지 않도록 판형에도 차이를 두었다. 작은 설명서를 손 가까이에서 확인하는 일과 큰 신문을 펼쳐 놓고 읽는 일은 몸의 움직임부터 다르다. 크기의 차이는 내용의 중요도를 구분하기 위한 것이 아니라, 같은 일상에 서로 다른 면적과 읽는 자세를 부여하기 위한 선택이었다.',
-       '인쇄 단계에서는 설계한 판형과 실제 출력 조건을 맞췄다. 《속속》은 출력 가능한 규격 안에서 비율을 유지하도록 축소했고, 《소소》는 PUR 무선제본, 《세세》는 중철로 제작했다. 《찬찬》은 제본하지 않고 집게로 고정했다. 출력 크기, 종이, 묶는 방식까지 포함해 각 매체가 실제로 어떤 형태로 놓이고 읽히는지 결정하는 단계였다.'],
      imgs:[{srcs:['img/soso/002.webp','img/soso/003.webp'],ratio:'105/148',label:'소소 4–5쪽'},{srcs:['img/chanchan/024.webp','img/chanchan/025.webp'],ratio:'250/350',label:'찬찬 24–25쪽'}],
      cap:'매체에 따라 달라지는 정보 밀도와 읽는 리듬.'},
     {no:'04',title:'기호를 지면과 공간으로',
-     text:'상황을 찾는 작은 기호를 지면의 중심 이미지와 벽 그래픽, 굿즈로 확장했다. 《속속》의 확대된 마침표처럼 익숙한 기호도 크기와 위치에 따라 다른 역할을 맡는다. 책 안의 그래픽 언어를 시트지, 스티커, 뱃지, 명함으로 이어갔다.',
-     detail:['각 상황을 찾는 표시로 사용한 기호는 매체에 따라 역할을 바꾸었다. 《속속》에서는 문장을 끝내는 작은 마침표를 크게 확대해 첫 면의 중심 이미지로 배치했다. 기호의 모양을 바꾸지 않고도 크기와 위치에 따라 읽기의 출발점이 달라질 수 있음을 보여주고자 했다.',
-       '이 그래픽 언어는 시트지 벽 그래픽과 스티커, 뱃지, 개인 명함으로 이어졌다. 책 안에서 정보를 구분하던 표정과 기호를 공간과 작은 물건으로 옮기며, 서로 다른 결과물 사이의 연결을 만들었다.'],
+     text:['상황을 찾는 작은 기호를 지면의 중심 이미지와 벽 그래픽, 굿즈로 확장했다. 《속속》에서는 문장을 끝내는 마침표를 크게 확대해 첫 면의 중심 이미지로 놓았다. 익숙한 기호도 크기와 위치에 따라 다른 역할을 맡는다.',
+       '책 안에서 정보를 구분하던 표정과 기호를 시트지, 스티커, 뱃지, 명함으로 옮기며 서로 다른 결과물 사이의 연결을 만들었다.'],
      imgs:[{srcs:['img/soksok/001.webp'],ratio:'390/540',label:'속속 1면'},{srcs:['img/zz/001.webp'],ratio:'1190/840',label:'쭉쭉 커팅 원본'},{srcs:['img/sticker/01.webp'],ratio:'35/30',label:'스티커'}],
      cap:'찾는 표시에서 지면과 공간의 그래픽으로 확장했다.'}
   ],
@@ -364,12 +356,12 @@ const photosSection=p=>{const list=p.photos.filter(x=>x.src||SHOW_PHOTO_SLOTS);i
 const processSection=p=>`<section class="pad process"><div class="grid" style="margin-bottom:8px"><div class="label">과정</div></div>
   ${p.method?`<div class="grid pmethod"><div class="label pno">방법론</div><div class="wide"><h3 class="mtitle">${esc(p.methodTitle)}</h3>${p.method.map(t=>`<p>${esc(t)}</p>`).join('')}</div></div>`:''}
   ${p.process.map(st=>{const all=st.imgs.map(g=>g.srcs);let k=0;
-  return `<details class="pstep"><summary class="grid psum"><span class="label pno">${esc(st.no)}</span><span class="body"><h3 class="big">${esc(st.title)}</h3></span><span class="ptog" aria-hidden="true"></span></summary>
+  return `<details class="pstep${st.lead?' lead':''}"${st.lead?' open':''}><summary class="grid psum"><span class="label pno">${esc(st.no)}</span><span class="body"><h3 class="big">${esc(st.title)}</h3></span><span class="ptog" aria-hidden="true"></span></summary>
   <div class="grid pbody">
-    <div class="body"><p>${esc(st.text)}</p>
+    <div class="body">${st.text.map(t=>`<p>${esc(t)}</p>`).join('')}
       ${st.table?`<table class="ptable"><thead><tr><th>매체</th><th>편집할 때 중심에 둔 질문</th><th>구성 방식</th></tr></thead><tbody>${st.table.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`:''}
       ${st.posture?`<p class="dim small" style="margin-top:20px">읽는 자세 — 네 매체를 읽는 고정 순서는 없다</p>${steps(p.media.map(m=>[m.name+' · '+m.size,m.posture]))}`:''}
-      <details class="more"><summary>자세히</summary>${st.detail.map(t=>`<p>${esc(t)}</p>`).join('')}</details></div>
+      </div>
     ${st.imgs.length?`<div class="wide pimgs">${st.imgs.map(g=>{const start=k;k+=1;const [rw,rh]=g.ratio.split("/").map(Number),w=g.srcs.length*rw/rh;
       return `<figure style="flex:${w.toFixed(3)} 1 0"><button type="button" class="zoomable pgroup" data-lb='${esc(JSON.stringify(all))}' data-start="${start}" aria-label="${esc(g.label||st.title)} 크게 보기">${g.srcs.map(x=>`<img src="${esc(x)}" alt="" loading="lazy" style="aspect-ratio:${g.ratio}">`).join('')}</button>${g.label?`<figcaption>${esc(g.label)}</figcaption>`:''}</figure>`}).join('')}</div>`:''}
     ${st.cap?`<p class="wide dim small pcap">${esc(st.cap)}</p>`:''}
