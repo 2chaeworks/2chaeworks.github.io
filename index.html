@@ -144,20 +144,22 @@ p{margin:0 0 1em;max-width:36em}
 .cards img[src*='/badge/'],.lbimgs img[src*='/badge/']{border-radius:50%}
 .cards{display:grid;grid-template-columns:repeat(var(--cols,2),minmax(0,1fr));gap:6px;align-items:start}.cards img{outline:1px solid var(--line)}
 /* 확대 창 */
-.lb{position:fixed;inset:0;z-index:50;background:rgba(10,10,10,.96);color:#ededed;display:flex;flex-direction:column}
+.lb{position:fixed;inset:0;z-index:50;background:#0a0a0a;color:#ededed;display:flex;flex-direction:column}
 .lb[hidden]{display:none}
 .lbtop{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:14px var(--pad);font-size:12px}
 .lbtop .lbnum{margin-right:auto;color:#999}
 .lb button{border-color:#444}
 .lbimgs{flex:1;overflow:auto;display:flex;justify-content:center;align-items:flex-start;gap:2px;padding:0 var(--pad) 40px}
-.lbimgs img{max-height:calc(100vh - 110px);max-width:min(48vw,100%);height:auto;width:auto;background:#fff;object-fit:contain;flex:0 0 auto}
+/* 모든 이미지를 같은 높이로 맞춰 보여준다 */
+.lbimgs img{height:calc(100vh - 110px);width:auto;max-width:min(48vw,100%);object-fit:contain;flex:0 1 auto;min-width:0}
 .lbload{color:#777;font-size:12px;margin-top:20vh}
 .lbimgs img:only-child{max-width:100%}
+.lbimgs img[src*='/badge/']{border-radius:0;clip-path:circle(50% at 50% 50%)}
 .lb.full .lbimgs{justify-content:flex-start}
-.lb.full .lbimgs img{max-height:none;max-width:none}
+.lb.full .lbimgs img{height:auto;max-height:none;max-width:none}
 .lbprev,.lbnext{position:absolute;top:50%;transform:translateY(-50%);background:rgba(10,10,10,.6)!important}
 .lbprev{left:12px}.lbnext{right:12px}
-@media(max-width:760px){.lbimgs{flex-direction:column;align-items:center}.lbimgs img{max-width:100%;max-height:none}.lbprev,.lbnext{top:auto;bottom:12px;transform:none}}
+@media(max-width:760px){.lbimgs{flex-direction:column;align-items:center}.lbimgs img{width:100%;height:auto;max-width:100%;max-height:none}.lbprev,.lbnext{top:auto;bottom:12px;transform:none}}
 .photos figure{margin:0}
 .photos img{width:100%;display:block;object-fit:cover}
 .slot{border:1px dashed #3a3a3a;display:flex;flex-direction:column;justify-content:space-between;padding:14px;font-size:12px;color:#666}
@@ -345,14 +347,14 @@ const photosSection=p=>{const list=p.photos.filter(x=>x.src||SHOW_PHOTO_SLOTS);i
 
 /* 과정 네 구간 */
 const processSection=p=>`<section class="pad process"><div class="grid" style="margin-bottom:8px"><div class="label">과정</div></div>
-  ${p.process.map(st=>{const all=st.imgs.flatMap(g=>g.srcs.map(x=>[x]));let k=0;
+  ${p.process.map(st=>{const all=st.imgs.map(g=>g.srcs);let k=0;
   return `<div class="grid pstep">
     <div class="label pno">${esc(st.no)}</div>
     <div class="body"><h3 class="big">${esc(st.title)}</h3><p>${esc(st.text)}</p>
       ${st.table?`<table class="ptable"><thead><tr><th>매체</th><th>편집할 때 중심에 둔 질문</th><th>구성 방식</th></tr></thead><tbody>${st.table.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`:''}
       ${st.posture?`<p class="dim small" style="margin-top:20px">읽는 자세 — 네 매체를 읽는 고정 순서는 없다</p>${steps(p.media.map(m=>[m.name+' · '+m.size,m.posture]))}`:''}
       <details><summary>자세히</summary>${st.detail.map(t=>`<p>${esc(t)}</p>`).join('')}</details></div>
-    ${st.imgs.length?`<div class="wide pimgs">${st.imgs.map(g=>{const start=k;k+=g.srcs.length;const [rw,rh]=g.ratio.split("/").map(Number),w=g.srcs.length*rw/rh;
+    ${st.imgs.length?`<div class="wide pimgs">${st.imgs.map(g=>{const start=k;k+=1;const [rw,rh]=g.ratio.split("/").map(Number),w=g.srcs.length*rw/rh;
       return `<figure style="flex:${w.toFixed(3)} 1 0"><button type="button" class="zoomable pgroup" data-lb='${esc(JSON.stringify(all))}' data-start="${start}" aria-label="${esc(g.label||st.title)} 크게 보기">${g.srcs.map(x=>`<img src="${esc(x)}" alt="" loading="lazy" style="aspect-ratio:${g.ratio}">`).join('')}</button>${g.label?`<figcaption>${esc(g.label)}</figcaption>`:''}</figure>`}).join('')}</div>`:''}
     ${st.cap?`<p class="wide dim small pcap">${esc(st.cap)}</p>`:''}
   </div>`}).join('')}
