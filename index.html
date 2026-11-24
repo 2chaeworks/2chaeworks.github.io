@@ -149,7 +149,8 @@ p{margin:0 0 1em;max-width:36em}
 .lbtop .lbnum{margin-right:auto;color:#999}
 .lb button{border-color:#444}
 .lbimgs{flex:1;overflow:auto;display:flex;justify-content:center;align-items:flex-start;gap:2px;padding:0 var(--pad) 40px}
-.lbimgs img{max-height:calc(100vh - 110px);max-width:min(48vw,100%);height:auto;width:auto;background:#fff}
+.lbimgs img{max-height:calc(100vh - 110px);max-width:min(48vw,100%);height:auto;width:auto;background:#fff;object-fit:contain;flex:0 0 auto}
+.lbload{color:#777;font-size:12px;margin-top:20vh}
 .lbimgs img:only-child{max-width:100%}
 .lb.full .lbimgs{justify-content:flex-start}
 .lb.full .lbimgs img{max-height:none;max-width:none}
@@ -391,7 +392,13 @@ const lb=document.createElement('div');lb.className='lb';lb.hidden=true;lb.setAt
 lb.innerHTML='<div class="lbtop"><span class="lbnum"></span><button type="button" class="lbfit">원래 크기</button><button type="button" class="lbclose" aria-label="닫기">닫기</button></div><div class="lbimgs"></div><button type="button" class="lbprev" aria-label="이전">←</button><button type="button" class="lbnext" aria-label="다음">→</button>';
 document.body.appendChild(lb);
 let lbList=[],lbI=0,lbLast=null;
-const lbShow=()=>{lb.querySelector('.lbimgs').innerHTML=lbList[lbI].map(s=>`<img src="${esc(s)}" alt="">`).join('');lb.querySelector('.lbnum').textContent=`${lbI+1} / ${lbList.length}`;lb.querySelector('.lbimgs').scrollTo(0,0);
+/* 사진을 다 불러온 뒤에 넣어서, 브라우저(특히 사파리)가 크기를 잘못 잡지 않게 한다 */
+let lbToken=0;
+const lbShow=()=>{const box=lb.querySelector('.lbimgs'),tok=++lbToken;
+  box.innerHTML='<span class="lbload">불러오는 중</span>';
+  Promise.all(lbList[lbI].map(s=>new Promise(r=>{const im=new Image();im.onload=im.onerror=()=>r(im);im.src=s}))).then(ims=>{
+    if(tok!==lbToken)return;
+    box.innerHTML=ims.map(im=>`<img src="${esc(im.src)}" width="${im.naturalWidth}" height="${im.naturalHeight}" alt="">`).join('')});lb.querySelector('.lbnum').textContent=`${lbI+1} / ${lbList.length}`;lb.querySelector('.lbimgs').scrollTo(0,0);
   lb.querySelector('.lbprev').hidden=lbList.length<2;lb.querySelector('.lbnext').hidden=lbList.length<2};
 function openLB(list,i=0){lbList=list;lbI=i;lbLast=document.activeElement;lb.classList.remove('full');lb.querySelector('.lbfit').textContent='원래 크기';lb.hidden=false;document.body.style.overflow='hidden';lbShow();lb.querySelector('.lbclose').focus()}
 const closeLB=()=>{lb.hidden=true;document.body.style.overflow='';lbLast&&lbLast.focus&&lbLast.focus()};
