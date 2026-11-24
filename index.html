@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이채민 — Visual Designer</title>
+<meta name="description" content="시각디자이너 이채민의 포트폴리오. 《말투의 형태》 — 일상의 사소한 이야기 100가지를 설명서, 연구 보고서, 매거진, 신문으로 다시 쓴 편집디자인 프로젝트.">
+<!-- 공유 미리보기: 호스팅 주소가 정해지면 og:url과 og:image를 전체 주소(https://…/og.png)로 바꾼다. 카카오톡은 전체 주소만 읽는다 -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="이채민 — Visual Designer">
+<meta property="og:description" content="《말투의 형태》 일상의 사소한 이야기 100가지, 네 가지 매체의 말투.">
+<meta property="og:image" content="og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:url" content="">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500&display=swap" rel="stylesheet">
+<!-- ADOBE_FONTS_KIT -->
+<script>(function(d){var config={kitId:'lyf1nls',scriptTimeout:3000,async:true},h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)})(document);</script>
+<style>
+/* VOICE  절제. 작업 이미지와 작은 활자가 주인공
+   IDEA   명함 네 장처럼, 페이지마다 명함 한 장의 색과 표정을 입는다
+          Work = 흰색 / 작품 = 검정 / About = 초록(민트) / Contact = 핑크 명함
+   TYPE   Adobe Fonts 윤굴림 750(500) 한 굵기, 위계는 크기와 색으로. 키트가 안 뜨면 Gothic A1
+   LAYOUT 데스크톱 12단 / 모바일 4단, 넓은 바깥 여백 */
+:root{--font:"yoon-gulim-750","Gothic A1",system-ui,sans-serif;--w:500;
+  --pad:clamp(24px,7vw,120px);--gap:20px}
+/* 페이지별 색 (명함 PDF에서 추출, 화면용 보정) */
+body[data-theme=pink]{--bg:#f03a9a;--ink:#10281a;--dim:#10281a;--line:rgba(16,40,26,.28);--ac:#10281a;--hover:rgba(16,40,26,.06)}
+body[data-theme=black]{--bg:#0d0d0d;--ink:#ededed;--dim:#7d7d7d;--line:#262626;--ac:#93d897;--hover:#151515}
+/* 민트: 글자는 핑크 한 가지. 명함 핑크(#f03a9a)는 민트 위에서 너무 흐려 한 톤만 짙게 */
+body[data-theme=mint]{--bg:#9eddba;--ink:#d61a80;--dim:#d61a80;--line:rgba(214,26,128,.35);--ac:#d61a80;--hover:rgba(214,26,128,.05)}
+body[data-theme=white]{--bg:#ffffff;--ink:#231f20;--dim:#868485;--line:#e0e0e0;--ac:#231f20;--hover:#f6f6f6}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--ink);font:var(--w) 13px/1.7 var(--font);overflow-x:clip;-webkit-font-smoothing:antialiased;transition:background-color .35s,color .35s}
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+a:focus-visible,button:focus-visible,tr:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+h1,h2,h3,h4{font-weight:var(--w);margin:0}
+.big{font-size:clamp(20px,2.2vw,30px);line-height:1.25}
+.small{font-size:12px}
+.dim{color:var(--dim)}
+.pad{padding-left:var(--pad);padding-right:var(--pad)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap)}
+@media(max-width:760px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}}
+
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding-top:30px;padding-bottom:30px;transition:background-color .35s}
+header .grid{align-items:baseline}
+.who{grid-column:span 7}.who .face{color:var(--ac);margin-left:1em}.who .dim{margin-left:1em}
+nav{grid-column:span 5;display:flex;justify-content:flex-end;gap:28px}
+nav a[aria-current]{color:var(--ac);text-decoration:none}
+@media(max-width:760px){.who{grid-column:span 4}.who .dim{display:none}nav{grid-column:span 4;justify-content:flex-start;gap:20px}}
+
+section{padding-top:clamp(56px,10vh,120px);padding-bottom:clamp(56px,10vh,120px)}
+.label{grid-column:span 3;color:var(--dim)}
+.body{grid-column:4 / span 5}
+.side{grid-column:10 / -1}
+.wide{grid-column:4 / -1}
+@media(max-width:760px){.label,.body,.side,.wide{grid-column:1 / -1}}
+p{margin:0 0 1em;max-width:36em}
+
+/* Work 목록 (메인) */
+.work{min-height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(40px,8vh,96px)}
+.flow{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(28px,6vh,64px);margin:0 calc(-1*var(--pad)) clamp(32px,6vh,64px);overflow:hidden;font-size:12px;color:var(--line);user-select:none;white-space:nowrap;word-spacing:1.4em}
+/* 방향은 한쪽으로 통일, 줄마다 속도만 조금씩 다르게 */
+.flow div span{display:inline-block;animation:flow var(--sp,140s) linear infinite}
+@keyframes flow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* 커서 표정: 클릭(탭)할 때마다 143개 중 다른 표정으로 바뀐다 */
+.cur{position:fixed;left:0;top:0;pointer-events:none;z-index:30;font-size:14px;white-space:nowrap;color:var(--ink);transform:translate(-100px,-100px);transition:opacity .2s}
+@media(hover:none){.cur{opacity:0}.cur.tap{opacity:1}}
+@media(prefers-reduced-motion:reduce){.flow div span{animation:none}body,header{transition:none}}
+.index{width:100%;border-collapse:collapse}
+.index th{font-weight:var(--w);color:var(--dim);text-align:left;padding:0 12px 12px 0}
+.index td{padding:18px 12px 18px 0;border-top:1px solid var(--line);vertical-align:baseline}
+.index tr:last-child td{border-bottom:1px solid var(--line)}
+.index tr.row{cursor:pointer}.index tr.row:hover td{background:var(--hover)}
+.index .no{width:4em}.index .yr{width:6em}.index .fd{width:16em}
+.index .t{position:relative}
+/* 마우스를 올리면 목록 위 빈 공간에 대표 이미지 */
+.thumb{position:absolute;left:0;bottom:calc(100% + 56px);height:min(300px,38vh);width:auto;opacity:0;pointer-events:none;transition:opacity .2s;z-index:2;box-shadow:0 2px 18px rgba(0,0,0,.12)}
+.index tr.row:hover .thumb{opacity:1}
+.thumbs{display:flex;align-items:flex-end;gap:10px;box-shadow:none}
+.thumbs img{width:auto;display:block;box-shadow:0 2px 14px rgba(0,0,0,.12)}
+@media(hover:none){.thumb{display:none}}
+@media(max-width:760px){.index thead{display:none}.index tr{display:grid;grid-template-columns:2.6em 1fr;border-top:1px solid var(--line);padding:14px 0}.index tr:last-child{border-bottom:1px solid var(--line)}.index td{border:0!important;padding:2px 0}.index td.yr,.index td.fd{grid-column:2;width:auto}.index td.fd{color:var(--dim)}}
+
+/* 프로젝트 상세 */
+.hero .big{margin-top:14px;max-width:24em}
+.meta{display:grid;grid-template-columns:6.5em 1fr;gap:6px 16px;margin:0;font-size:12px}
+.meta dt{color:var(--dim)}.meta dd{margin:0}
+.scale{display:flex;align-items:flex-end;gap:clamp(8px,1.6vw,24px);margin-top:clamp(40px,7vh,80px)}
+.scale figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.scale figcaption{font-size:12px;line-height:1.4}
+.ph{width:100%;background:rgba(255,255,255,.03);border:1px dashed #333;display:grid;place-items:center;color:#555;font-size:11px;text-align:center;padding:4px;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:contain;display:block}
+.ph.has{border:0;background:none;padding:0}
+@media(max-width:760px){.scale figcaption .dim{display:none}}
+.case{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);align-items:end}
+.case figure{margin:0}.case figcaption{margin-top:10px;font-size:12px}.case figcaption b{display:block;font-weight:var(--w);color:var(--ac)}
+@media(max-width:760px){.case{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:8px}.case figure{flex:0 0 72%;scroll-snap-align:start}}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:grid;grid-template-columns:8em 1fr;gap:16px;padding:10px 0;border-top:1px solid var(--line)}
+.steps li:last-child{border-bottom:1px solid var(--line)}
+@media(max-width:560px){.steps li{grid-template-columns:1fr;gap:2px}}
+.medium .head{grid-column:1 / span 3;position:sticky;top:100px;align-self:start}
+.medium .head h3{color:var(--ac)}
+.medium .head .dim{margin-bottom:20px}
+.medium .imgs{grid-column:4 / -1;display:grid;gap:var(--gap)}
+.viewer{aspect-ratio:16/10}
+@media(max-width:760px){.medium .head{grid-column:1 / -1;position:static}.medium .imgs{grid-column:1 / -1}}
+.ext{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+.ext h4{margin:12px 0 4px}
+@media(max-width:760px){.ext{grid-template-columns:1fr}}
+.ab{margin-bottom:clamp(40px,7vh,72px)}
+.ab .steps li{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+@media(max-width:760px){.ab .steps li{grid-template-columns:1fr;gap:2px}}
+.contact{list-style:none;margin:0;padding:0;display:grid;gap:clamp(20px,3vh,32px)}
+.contact li{display:grid;gap:4px;line-height:1.3}
+.contact .dim{font-size:12px}
+/* 넘겨보기 */
+.viewer{outline:none}
+.vstage{width:100%;display:flex;justify-content:center}
+.book{width:100%;max-width:calc(min(78vh,900px) * var(--pw) / var(--ph) * 2)}
+.pg{background:#fff;overflow:hidden}.pg img{width:100%;height:100%;object-fit:cover;display:block}
+.pg.blank{background:#f4f4f2}
+.vbar{display:flex;gap:16px;align-items:center;justify-content:center;margin-top:16px;font-size:12px}
+.vbar button,.lb button{font:inherit;color:inherit;background:none;border:1px solid var(--line);padding:8px 14px;min-height:36px;cursor:pointer}
+.vbar button:hover,.lb button:hover{border-color:currentColor}
+.vnum{min-width:6em;text-align:center;color:var(--dim)}
+/* 펼쳐 놓고 보기 */
+.sheets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+@media(max-width:760px){.sheets{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+.zoomable{all:unset;cursor:zoom-in;display:block}
+.zoomable:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+.sheets img,.caseimg img,.cards img{width:100%;display:block;background:#fff}
+.sheets span{display:block;font-size:12px;color:var(--dim);margin-top:6px}
+.caseimg{display:flex;gap:2px}.caseimg img{flex:1;min-width:0}
+.cards img[src*='/badge/'],.lbimgs img[src*='/badge/']{border-radius:50%}
+.cards{display:grid;grid-template-columns:repeat(var(--cols,2),minmax(0,1fr));gap:6px;align-items:start}.cards img{outline:1px solid var(--line)}
+/* 확대 창 */
+.lb{position:fixed;inset:0;z-index:50;background:rgba(10,10,10,.96);color:#ededed;display:flex;flex-direction:column}
+.lb[hidden]{display:none}
+.lbtop{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:14px var(--pad);font-size:12px}
+.lbtop .lbnum{margin-right:auto;color:#999}
+.lb button{border-color:#444}
+.lbimgs{flex:1;overflow:auto;display:flex;justify-content:center;align-items:flex-start;gap:2px;padding:0 var(--pad) 40px}
+.lbimgs img{max-height:calc(100vh - 110px);max-width:min(48vw,100%);height:auto;width:auto;background:#fff}
+.lbimgs img:only-child{max-width:100%}
+.lb.full .lbimgs{justify-content:flex-start}
+.lb.full .lbimgs img{max-height:none;max-width:none}
+.lbprev,.lbnext{position:absolute;top:50%;transform:translateY(-50%);background:rgba(10,10,10,.6)!important}
+.lbprev{left:12px}.lbnext{right:12px}
+@media(max-width:760px){.lbimgs{flex-direction:column;align-items:center}.lbimgs img{max-width:100%;max-height:none}.lbprev,.lbnext{top:auto;bottom:12px;transform:none}}
+.photos figure{margin:0}
+.photos img{width:100%;display:block;object-fit:cover}
+.slot{border:1px dashed #3a3a3a;display:flex;flex-direction:column;justify-content:space-between;padding:14px;font-size:12px;color:#666}
+.slot b{font-weight:var(--w);color:#8a8a8a}
+@media(max-width:760px){.photos figure{grid-column:1 / -1!important}}
+.next{display:flex;justify-content:space-between;gap:16px;margin-top:64px}
+footer{padding-top:30px;padding-bottom:30px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body data-theme="white">
+<header class="pad"><div class="grid">
+  <a class="who" href="#work"><span>이채민</span><span class="face" aria-hidden="true"></span><span class="dim">Visual Designer</span></a>
+  <nav><a href="#work" data-v="work">Work</a><a href="#about" data-v="about">About</a><a href="#contact" data-v="contact">Contact</a></nav>
+</div></header>
+<main id="app"></main>
+<footer class="pad"><span>© 2026 이채민</span><span>2chae.works@gmail.com · @min.2chae</span></footer>
+
+<script src="vendor/page-flip.browser.js"></script>
+<script>
+{
+/* ===== 데이터: 작업을 추가할 때는 PROJECTS 배열에 같은 형식으로 하나 더 넣는다 =====
+   img·thumb: null 이면 표시하지 않거나 '이미지 대기' 자리표시. 경로를 넣으면 실제 이미지로 바뀐다.
+   photos: 사진 자리(슬롯). src에 경로를 넣으면 사진이 뜬다.
+   SHOW_PHOTO_SLOTS가 true면 아직 사진이 없는 자리도 '사진 대기'로 보이고, false면 사진 있는 자리만 보인다(공개 전 false). */
+const SHOW_PHOTO_SLOTS=true;
+/* About 정보: 이전 포트폴리오(RULEBOOK 덱) Profile 장에서 가져옴. 기간·명칭은 사용자 확인 필요 */
+const PROFILE={name:'이채민',title:'Visual Designer',email:'2chae.works@gmail.com',insta:'min.2chae',
+  education:[['계원예술대학교 시각디자인과','2027.08 졸업 예정']],
+  experience:[['시각디자인과 졸업준비위원회 부위원장','2026.03 – 2027.02 (예정)'],['밴드 동아리 ‘SAFA’ 공연 브랜딩','2026.02 연합공연 · 2024.12 학기말 공연'],['‘다매체타이포그래피’ 전시 기획단 디자인팀','2025.04 – 2025.06']],
+  exhibition:[['계원예술대학교 시각디자인과 졸업전시 〈맛보기〉','2026 · 1289 BUNKER']],
+  focus:['Brand Identity','UI / UX','Editorial Design']};
+/* 사이트에서 뺀 것(PDF 포폴·이력서에만): Tools 목록, 디지털미디어디자인과(2024.03–08), 총학생회 협치국원 */
+
+const PROJECTS=[{
+  id:'maltu', no:'01', title:'말투의 형태', year:'2026', field:'편집디자인 · 출판 · 전시',
+  thumb:'covers', /* 목록에서 마우스를 올리면 네 매체 표지가 실제 크기 비율로 뜸. 다른 작업은 이미지 경로 하나를 넣으면 됨 */
+  parts:'출판물 4종, 벽 그래픽, 스티커·뱃지, 명함',
+  oneline:'일상의 사소한 이야기 100가지를 서로 다른 편집 형식으로 풀어내며, 시각적 형태가 내용의 인상과 해석을 어떻게 바꾸는지 보여준다.',
+  /* intro: 졸업전시 캡션 원문 (사용자 제공) */
+  intro:['《말투의 형태》는 일상의 사소한 이야기 100가지를 서로 다른 편집 형식으로 풀어내며, 시각적 형태가 내용의 인상과 해석을 어떻게 바꾸는지 보여준다. 일상의 행동과 생각은 설명서의 지침, 연구 보고서의 논제, 매거진의 기사, 신문의 사건이 된다. 서체와 조판, 판형과 펼침 방식은 각 매체의 말투를 이루며, 독자가 내용을 얼마나 진지하게 받아들이고 어떤 의미를 부여하는지에 관여한다. 내용과 형식 사이의 간극을 통해, 형태가 내용의 의미와 가치를 판단하는 기준으로 작용함을 드러낸다.'],
+  info:[['연도','2026'],['분류','편집디자인'],['결과물','출판물 4종, 벽 그래픽, 스티커·뱃지, 명함'],['전시','계원예술대학교 시각디자인과 졸업전시 〈맛보기〉, 1289 BUNKER']],
+  caseTitle:'CASE 062 「네·넵·넹·넴」',
+  caseText:'같은 번호의 사례가 매체마다 무엇으로 바뀌는지 보여주는 예시다.',
+  media:[
+    {id:'soso',name:'소소',kind:'설명서',w:105,h:148,size:'A6',img:'img/soso/cover-front.webp',
+      caseImg:['img/soso/130.webp','img/soso/131.webp'],caseNote:'선택을 안내하는 설명서',casePage:'132–133쪽',
+      /* 넘겨보기: 앞표지 → 표지 안쪽(빈면) → 내지 1–212 → 표지 안쪽(빈면) → 뒤표지 */
+      book:{dir:'soso',pages:['cover-front','',...Array.from({length:212},(_,i)=>String(i+1).padStart(3,'0')),'','cover-back']},
+      posture:'손 가까이에서 확인한다',
+      desc:'일상의 사소한 상황을 사용 설명서처럼 다룬 책이다. 작은 판형, 밀도 높은 정보 배치, 절차적인 문장과 도식으로 이야기를 감상하기보다 상황에 대응하는 방법을 확인하는 읽기를 만든다.',
+      spec:[['판형','A6 / 105 × 148mm'],['구성','100가지 케이스, 케이스별 좌우 2쪽'],['정보 구획','READY / STEP / NOTE / CAUTION / CHECK / RESULT'],['쪽수','내지 212쪽 + 표지'],['제본','PUR 무선, 세로 좌철'],['표지','랑데뷰 울트라 240g, 단면 컬러'],['내지','백색 모조 100g, 양면 흑백']]},
+    {id:'sese',name:'세세',kind:'연구 보고서',w:210,h:297,size:'A4',img:'img/sese/001.webp',
+      caseImg:['img/sese/023.webp'],book:{dir:'sese',pages:Array.from({length:36},(_,i)=>String(i+1).padStart(3,'0'))},
+      caseNote:'조건을 비교하는 상세 분석',casePage:'23쪽',
+      posture:'항목을 따라 살핀다',
+      desc:'일상의 선택과 망설임을 분석 대상으로 다룬다. 정식 제목은 ‘일상적 판단의 조건에 관한 연구’다. 100사례를 다섯 범주로 재분류해 10개를 상세히 분석하고 90개를 비교 기록했다. 실제 실험이나 통계가 아닌 상황 기반 사고실험이다.',
+      spec:[['판형','A4 / 210 × 297mm'],['구성','대표 10개 상세 분석 + 90개 비교 기록'],['쪽수','내지 32쪽 + 표지 4쪽, 총 36쪽'],['제본','중철, 세로 좌철'],['표지','백색 모조 100g, 양면 컬러'],['내지','백색 모조 100g, 양면 흑백']]},
+    {id:'chanchan',name:'찬찬',kind:'매거진',w:250,h:350,size:'250 × 350',img:'img/chanchan/001.webp',
+      caseImg:['img/chanchan/009.webp'],book:{dir:'chanchan',pages:Array.from({length:32},(_,i)=>String(i+1).padStart(3,'0'))},
+      caseNote:'말투를 다루는 특집',casePage:'9쪽부터',
+      posture:'장면에 머물러 넘긴다',
+      desc:'일상의 장면을 기사, 인터뷰, 대화, 심리테스트와 짧은 읽을거리로 확장한다. 유치하지 않으면서 옛 매거진의 발칙한 재미를 살리는 방향으로 편집했다. 28~30쪽에는 전체 100가지 상황과 기호를 찾아보기로 수록했다.',
+      spec:[['판형','250 × 350mm'],['쪽수','표지 포함 32쪽'],['제본','제본 없음, 집게로 고정'],['표지','스노우 250g'],['내지','백색 모조 120g']]},
+    {id:'soksok',name:'속속',kind:'신문',w:390,h:540,size:'390 × 540',img:'img/soksok/001.webp',
+      caseImg:['img/soksok/003.webp'],sheets:{dir:'soksok',pages:Array.from({length:8},(_,i)=>String(i+1).padStart(3,'0'))},
+      caseNote:'언어·소통 기사',casePage:'3면',
+      posture:'펼쳐 놓고 골라 읽는다',
+      desc:'사소한 일상을 기사와 소식처럼 편집한다. 100가지 중 24개 소재를 골라 2~7면의 여섯 주제로 묶고, 8면에 사례 대응 색인과 편집 후기를 실었다. 실제 취재 보도가 아닌 편집 실험이다.',
+      spec:[['판형','한 면 390 × 540mm (원본 설계)'],['면수','8면'],['출력 규격','507 × 732mm'],['제작','책 제본 없이 접는 신문'],['종이·인쇄','모조지 백색 80g, 양면 흑백, 인디고']]}
+  ],
+  origin:[['권위적인 책','2026년 1학기 디자인스튜디오I. 진지한 형식과 사소한 내용의 간극을 한 권에 담았다.'],
+    ['매체 분화','읽는 방식과 크기를 비교할 수 있도록 네 매체로 나눴다.'],
+    ['공통 번호','100가지 사례의 번호로 네 매체를 서로 연결했다.']],
+  method:'기획 과정에서 레몽 크노의 『문체 연습』을 방법론적 참고로 삼았다. 하나의 사건을 여러 문체로 변주하는 접근을 편집디자인의 형식으로 확장했다.',
+  processShow:false, /* 수정 전후 등 실제 과정 자료가 생기면 true */
+  process:[['소재 수집','일상의 작은 선택과 망설임을 모았다.'],['내용 확장','초기 소재를 100가지 상황으로 늘렸다.'],['매체별 재구성','설명서·보고서·매거진·신문의 문법에 맞춰 글의 구성과 정보 순서를 바꿨다.'],['시각 체계 설계','판형·서체·조판·도식·정보 위계를 매체마다 설계했다.'],['수정과 검수','밀도, 중복, 재미, 표지, 목차를 조정했다.'],['인쇄 제작','인쇄와 출력 조건에 맞게 파일을 조정했다.'],['확장과 전시','벽 그래픽, 스티커·뱃지, 명함과 함께 제시했다.']],
+  extras:[
+    {name:'쭉쭉',kind:'벽 그래픽',imgs:['img/zz/001.webp'],cols:1,ratio:'1190/840',text:'책 안의 표정, 기호, 도식을 전시 공간으로 확대했다. 검정 무광 시트지 커팅, 재단 1190 × 840mm. 이미지는 커팅용 원본 파일이다.'},
+    {name:'스티커 · 뱃지',kind:'굿즈',imgs:[...Array.from({length:10},(_,i)=>`img/sticker/${String(i+1).padStart(2,'0')}.webp`),...['01','03','04','08','09'].map(n=>`img/badge/${n}.webp`)],cols:5,ratio:'auto',text:'문자와 기호로 만든 표정. 스티커 10종(35 × 30mm), 뱃지 5종(25 × 25mm).'},
+    {name:'개인 명함',kind:'네 가지 버전',cols:2,show:4,imgs:['img/card/white-2.webp','img/card/pink-2.webp','img/card/mint-2.webp','img/card/black-2.webp','img/card/white-1.webp','img/card/pink-1.webp','img/card/mint-1.webp','img/card/black-1.webp'],ratio:'85/55',text:'기본, 초록, 핑크, 검정. 85 × 55mm, 스노우지 300g.'}],
+  /* 전시·실물 사진 자리. span = 12단 중 차지하는 칸, ratio = 사진 비율(받은 사진에 맞춰 바꿔도 됨) */
+  photos:[
+    {label:'전시 전체',span:12,ratio:'16/9',src:null,alt:''},
+    {label:'네 권 함께',span:8,ratio:'3/2',src:null,alt:''},
+    {label:'벽 그래픽 쭉쭉 설치',span:4,ratio:'4/5',src:null,alt:''},
+    {label:'소소 펼침면',span:4,ratio:'4/5',src:null,alt:''},
+    {label:'찬찬 펼침면',span:4,ratio:'4/5',src:null,alt:''},
+    {label:'속속 펼친 모습',span:4,ratio:'4/5',src:null,alt:''},
+    {label:'디테일 확대',span:6,ratio:'1/1',src:null,alt:''},
+    {label:'스티커 · 뱃지 · 명함',span:6,ratio:'1/1',src:null,alt:''}
+  ],
+  photoCredit:'', /* 사진 촬영자 이름. 비어 있으면 크레딧에 안 나옴 */
+  credit:[['기획·글·편집·디자인','이채민']]
+}];
+
+/* 명함 뒷면 표정 143개 (13줄 × 11개, 줄마다 눈은 같고 입만 바뀜) */
+const FACES=["(o_o)(o-o)(o.o)(ovo)[owo](o~o)(o∧o)(ouo){o3o}(o=o)(oΔº)", "(º_º)(º-º)(º.º)(ºvº)[ºwº](º~º)(ºoº)(ºuº){º3º}(º=º)(ºΔ^)", "(^_^)(^-^)(^.^)(^v^)[^w^](^~^)(^o^)(^u^){^3^}(^=^)(^Δ-)", "(-_-)(-^-)(-.-)(-v-)[-w-](-~-)(-o-)(-u-){-3-}(-=-)(-Δ=)", "(=_=)(=^=)(=.=)(=v=)[=w=](=~=)(=o=)(=u=){=3=}(=n=)(=Δ*)", "(*_*)(*-*)(*.*)(*v*)[*w*](*~*)(*o*)(*u*){*3*}(*=*)(*Δ∂)", "(∂_∂)(∂-∂)(∂.∂)(∂v∂)[∂w∂](∂~∂)(∂o∂)(∂u∂){∂3∂}(∂=∂)(∂Δ+)", "(+_+)(+-+)(+.+)(+v+)[+w+](+~+)(+o+)(+u+){+3+}(+=+)(+Δ<)", "(>_<)(>-<)(>.<)(>v<)[>w<](>~<)(>o<)(>u<){>3<}(>=<)(>ΔT)", "(T_T)(T-T)(T.T)(TvT)[TwT](T~T)(ToT)(TuT){T3T}(T=T)(TΔu)", "(u_u)(u-u)(u.u)(uvu)[uwu](u~u)(uou)(unu){u3u}(u=u)(uΔ³)", "(³_³)(³-³)(³.³)(³v³)[³w³](³~³)(³o³)(³u³){³3³}(³=³)(³Δø)", "(ø_ø)(ø-ø)(ø.ø)(øvø)[øwø](ø~ø)(øoø)(øuø){ø3ø}(ø=ø)(øΔo)"].map(l=>l.match(/[\(\[\{][^\)\]\}]*[\)\]\}]/g));
+/* 헤더 표정: 페이지별 눈(명함 대표 표정의 눈) + 입. 링크에 마우스를 올리면 입이 o 로 바뀐다 */
+/* 메인 꾸밈: 명함 뒷면 표정 4줄이 한 방향으로 천천히 흐름 (확정) */
+const FLOW_ROWS=[0,4,8,12]; /* 4줄 */
+const FLOW_SPEED=['140s','170s','155s','185s']; /* 줄별 속도, 방향은 모두 같음 */
+const ALL_FACES=FACES.flat();
+const EYE={work:['=','u'],project:['*','~'],about:['∂','.'],contact:['*','o']};
+
+/* 페이지별 테마와 표정 (명함 네 장에서) */
+const THEME={work:['white','!(=u=)♡'],project:['black','!(*~*)♡'],about:['mint','!(∂.∂)♡'],contact:['pink','!(*o*)♡']};
+
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ph=(img,ratio,label)=>`<div class="ph${img?' has':''}" style="aspect-ratio:${ratio}">${img?`<img src="${esc(img)}" alt="${esc(label)}" loading="lazy">`:esc(label)+'<br>이미지 대기'}</div>`;
+const dl=rows=>`<dl class="meta">${rows.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
+const steps=rows=>`<ol class="steps">${rows.map(([a,b])=>`<li><span>${esc(a)}</span><span class="dim">${esc(b)}</span></li>`).join('')}</ol>`;
+
+/* 넘겨보기(책) */
+const viewer=m=>`<div class="viewer" data-id="${m.id}" style="--pw:${m.w};--ph:${m.h}">
+  <div class="vstage"><div class="book"></div></div>
+  <div class="vbar"><button type="button" class="vprev" aria-label="이전 쪽">←</button><span class="vnum">1 / ${m.book.pages.length}</span><button type="button" class="vnext" aria-label="다음 쪽">→</button><button type="button" class="vzoom">크게 보기</button></div></div>`;
+/* 펼쳐 놓고 보기(신문 낱면) */
+const sheets=m=>{const ps=m.sheets.pages.map(n=>`img/${m.sheets.dir}/${n}.webp`);
+  return `<div class="sheets">${ps.map((src,i)=>`<button type="button" class="zoomable" data-lb='${esc(JSON.stringify(ps.map(x=>[x])))}' data-start="${i}" aria-label="${i+1}면 크게 보기"><img src="${esc(src)}" alt="${esc(m.name)} ${i+1}면" loading="lazy" style="aspect-ratio:${m.w}/${m.h}"><span>${i+1}면</span></button>`).join('')}</div>`};
+
+/* 표지 네 장을 실제 크기 비율로: 가장 큰 판형(속속 540mm)을 기준 높이로 */
+const thumbCovers=x=>{const H=Math.max(...x.media.map(m=>m.h));
+  return `<span class="thumb thumbs" aria-hidden="true">${x.media.map(m=>`<img src="${esc(m.img)}" alt="" loading="lazy" style="height:${(m.h/H*100).toFixed(1)}%;aspect-ratio:${m.w}/${m.h}">`).join('')}</span>`};
+
+/* 실물 · 전시 사진 */
+const photosSection=p=>{const list=p.photos.filter(x=>x.src||SHOW_PHOTO_SLOTS);if(!list.length)return'';
+  const real=p.photos.filter(x=>x.src).map(x=>[x.src]);
+  return `<section class="pad"><div class="grid" style="margin-bottom:24px"><div class="label">실물 · 전시</div></div>
+  <div class="grid photos">${list.map(x=>`<figure style="grid-column:span ${x.span}">${x.src
+    ?`<button type="button" class="zoomable" data-lb='${esc(JSON.stringify(real))}' data-start="${real.findIndex(r=>r[0]===x.src)}" aria-label="${esc(x.label)} 크게 보기"><img src="${esc(x.src)}" alt="${esc(x.alt||x.label)}" loading="lazy" style="aspect-ratio:${x.ratio}"></button>`
+    :`<div class="slot" style="aspect-ratio:${x.ratio}"><span>사진 대기</span><b>${esc(x.label)}</b></div>`}</figure>`).join('')}</div></section>`};
+
+function home(){
+  return `<section class="work pad">
+    <div class="flow" aria-hidden="true">${FLOW_ROWS.map((i,k)=>`<div style="--sp:${FLOW_SPEED[k]}"><span>${(FACES[i].join(' ')+' ').repeat(6)}</span></div>`).join('')}</div>
+    <table class="index">
+    <thead><tr><th colspan="4">Work (${PROJECTS.length})</th></tr></thead><tbody>
+    ${PROJECTS.map(x=>`<tr class="row" data-go="${x.id}" tabindex="0"><td class="no">${esc(x.no)}</td><td class="t big"><a href="#${x.id}">${esc(x.title)}</a>${x.thumb==='covers'?thumbCovers(x):x.thumb?`<img class="thumb" src="${esc(x.thumb)}" alt="" loading="lazy">`:''}</td><td class="yr">${esc(x.year)}</td><td class="fd">${esc(x.field)}</td></tr>`).join('')}
+    </tbody></table></section>`;
+}
+
+function project(p){
+  return `<section class="pad hero">
+    <p class="dim">${esc(p.no)} · ${esc(p.year)} · ${esc(p.field)}</p>
+    <h1 class="big">《${esc(p.title)}》</h1>
+    <div class="scale">${p.media.map(m=>`<figure style="flex:${m.w} 1 0">${ph(m.img,`${m.w}/${m.h}`,m.name+' 표지')}<figcaption>${esc(m.name)} <span class="dim">${esc(m.kind)} · ${esc(m.size)}</span></figcaption></figure>`).join('')}</div>
+  </section>
+  <section class="pad"><div class="grid"><div class="label">개요</div>
+    <div class="body">${p.intro.map(t=>`<p>${esc(t)}</p>`).join('')}</div>
+    <div class="side">${dl(p.info)}</div></div></section>
+  <section class="pad"><div class="grid" style="margin-bottom:32px"><div class="label">예시</div>
+    <div class="body"><h2 class="big">${esc(p.caseTitle)}</h2><p class="dim" style="margin-top:10px">${esc(p.caseText)}</p></div></div>
+    <div class="case">${p.media.map(m=>`<figure><button class="zoomable caseimg" type="button" data-lb='${esc(JSON.stringify([m.caseImg]))}' aria-label="${esc(m.name)} ${esc(m.casePage)} 크게 보기">${m.caseImg.map(src=>`<img src="${esc(src)}" alt="${esc(m.name)} ${esc(m.casePage)}" loading="lazy" style="aspect-ratio:${m.w}/${m.h}">`).join('')}</button><figcaption><b>${esc(m.name)} · ${esc(m.casePage)}</b>${esc(m.caseNote)}</figcaption></figure>`).join('')}</div></section>
+  <section class="pad"><div class="grid"><div class="label">출발점</div><div class="body">
+    ${steps(p.origin)}
+    <p style="margin-top:28px">${esc(p.method)}</p>
+    <p class="dim" style="margin-top:36px">읽는 자세 — 네 매체를 읽는 고정 순서는 없다</p>
+    ${steps(p.media.map(m=>[m.name,m.posture]))}
+  </div></div></section>
+  ${p.media.map(m=>`<section class="pad medium" id="${m.id}"><div class="grid">
+    <div class="head"><h3 class="big">${esc(m.name)}</h3><div class="dim">${esc(m.kind)}</div>${dl(m.spec)}</div>
+    <div class="imgs"><p>${esc(m.desc)}</p>
+      ${m.book?viewer(m):m.sheets?sheets(m):''}</div>
+  </div></section>`).join('')}
+  <section class="pad"><div class="grid"><div class="label">확장</div><div class="wide"><div class="ext">
+    ${p.extras.map(e=>`<div>${e.imgs?`<button class="zoomable cards" style="--cols:${e.cols||2}" type="button" data-lb='${esc(JSON.stringify(e.imgs.map(x=>[x])))}' aria-label="${esc(e.name)} 크게 보기">${e.imgs.slice(0,e.show||e.imgs.length).map(x=>`<img src="${esc(x)}" alt="" loading="lazy" style="aspect-ratio:${e.ratio}">`).join('')}</button>`:e.img?ph(e.img,e.ratio,e.name):''}<h4>${esc(e.name)} <span class="dim">${esc(e.kind)}</span></h4><p class="small dim">${esc(e.text)}</p></div>`).join('')}
+  </div></div></div></section>
+  ${p.processShow?`<section class="pad"><div class="grid"><div class="label">과정</div><div class="body">${steps(p.process)}</div></div></section>`:''}
+  ${photosSection(p)}
+  <section class="pad"><div class="grid"><div class="label">크레딧</div><div class="body">${dl(p.photoCredit?[...p.credit,['사진',p.photoCredit]]:p.credit)}</div></div>
+    <div class="next"><a href="#work">← Work</a><a href="#about">About</a></div></section>`;
+}
+
+function about(){
+  const block=(label,rows)=>`<div class="grid ab"><div class="label">${label}</div><div class="wide">${steps(rows)}</div></div>`;
+  return `<section class="pad"><div class="grid ab"><div class="label">About</div><div class="wide">
+      <h1 class="big">${esc(PROFILE.name)}</h1><p>${esc(PROFILE.title)}</p></div></div>
+    ${block('Education',PROFILE.education)}
+    ${block('Experience',PROFILE.experience)}
+    ${block('Exhibition',PROFILE.exhibition)}
+    <div class="grid ab"><div class="label">Focus</div><div class="wide"><p>${PROFILE.focus.map(esc).join(' · ')}</p></div></div>
+  </section>`;
+}
+
+function contact(){
+  return `<section class="pad"><div class="grid"><div class="label">Contact</div><div class="body">
+    <ul class="contact big">
+      <li><span class="dim">Email</span>${esc(PROFILE.email)}</li>
+      <li><span class="dim">Instagram</span><a href="https://www.instagram.com/${esc(PROFILE.insta)}/">@${esc(PROFILE.insta)}</a></li>
+    </ul>
+  </div></div></section>`;
+}
+
+const app=document.getElementById('app'),face=document.querySelector('.who .face');
+function route(){
+  const h=location.hash.slice(1)||'work';
+  const p=PROJECTS.find(x=>x.id===h);
+  const view=p?'project':(h==='about'||h==='contact')?h:'work';
+  app.innerHTML=p?project(p):view==='about'?about():view==='contact'?contact():home();
+  if(p)initViewers(p);
+  const [theme]=THEME[view];document.body.dataset.theme=theme;curView=view;setFace();
+  document.querySelectorAll('nav a[data-v]').forEach(a=>a.toggleAttribute('aria-current',a.dataset.v===(p?'work':view)));
+  window.scrollTo(0,0);
+}
+let curView='work';
+let books=[];
+function initViewers(p){
+  books.forEach(b=>{try{b.destroy()}catch(e){}});books=[];
+  app.querySelectorAll('.viewer').forEach(v=>{
+    const m=p.media.find(x=>x.id===v.dataset.id);if(!m||!window.St)return;
+    const src=n=>n?`img/${m.book.dir}/${n}.webp`:'';
+    const root=v.querySelector('.book');
+    root.innerHTML=m.book.pages.map((n,i)=>`<div class="pg${n?'':' blank'}">${n?`<img data-i="${i}" data-src="${src(n)}" alt="${esc(m.name)} ${i+1}">`:''}</div>`).join('');
+    const pf=new St.PageFlip(root,{width:m.w*4,height:m.h*4,size:'stretch',minWidth:120,maxWidth:2000,minHeight:160,maxHeight:2400,showCover:true,maxShadowOpacity:.35,flippingTime:700,mobileScrollSupport:false,usePortrait:true,autoSize:true});
+    const load=c=>{v.querySelectorAll('img[data-src]').forEach(im=>{const i=+im.dataset.i;if(i>=c-4&&i<=c+6){im.src=im.dataset.src;im.removeAttribute('data-src')}})};
+    const num=v.querySelector('.vnum'),total=m.book.pages.length;
+    const upd=c=>{num.textContent=`${c+1} / ${total}`;load(c)};
+    pf.on('init',e=>upd(e.data.page));pf.on('flip',e=>upd(e.data));
+    pf.loadFromHTML(root.querySelectorAll('.pg'));
+    v.querySelector('.vprev').onclick=()=>pf.flipPrev();
+    v.querySelector('.vnext').onclick=()=>pf.flipNext();
+    v.tabIndex=0;v.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){pf.flipNext();e.preventDefault()}if(e.key==='ArrowLeft'){pf.flipPrev();e.preventDefault()}});
+    /* 크게 보기: 지금 펼친 면(또는 한 쪽)을 확대 창으로 */
+    const spreads=[];const pg=m.book.pages;spreads.push([0]);for(let i=1;i<pg.length-1;i+=2)spreads.push([i,i+1]);spreads.push([pg.length-1]);
+    v.querySelector('.vzoom').onclick=()=>{const c=pf.getCurrentPageIndex();const si=Math.max(0,spreads.findIndex(s=>s.includes(c)));
+      openLB(spreads.map(s=>s.map(i=>src(pg[i])).filter(Boolean)),si)};
+    books.push(pf);
+  });
+}
+/* 확대 창 */
+const lb=document.createElement('div');lb.className='lb';lb.hidden=true;lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');lb.setAttribute('aria-label','크게 보기');
+lb.innerHTML='<div class="lbtop"><span class="lbnum"></span><button type="button" class="lbfit">원래 크기</button><button type="button" class="lbclose" aria-label="닫기">닫기</button></div><div class="lbimgs"></div><button type="button" class="lbprev" aria-label="이전">←</button><button type="button" class="lbnext" aria-label="다음">→</button>';
+document.body.appendChild(lb);
+let lbList=[],lbI=0,lbLast=null;
+const lbShow=()=>{lb.querySelector('.lbimgs').innerHTML=lbList[lbI].map(s=>`<img src="${esc(s)}" alt="">`).join('');lb.querySelector('.lbnum').textContent=`${lbI+1} / ${lbList.length}`;lb.querySelector('.lbimgs').scrollTo(0,0);
+  lb.querySelector('.lbprev').hidden=lbList.length<2;lb.querySelector('.lbnext').hidden=lbList.length<2};
+function openLB(list,i=0){lbList=list;lbI=i;lbLast=document.activeElement;lb.classList.remove('full');lb.querySelector('.lbfit').textContent='원래 크기';lb.hidden=false;document.body.style.overflow='hidden';lbShow();lb.querySelector('.lbclose').focus()}
+const closeLB=()=>{lb.hidden=true;document.body.style.overflow='';lbLast&&lbLast.focus&&lbLast.focus()};
+lb.querySelector('.lbclose').onclick=closeLB;
+lb.querySelector('.lbprev').onclick=()=>{lbI=(lbI-1+lbList.length)%lbList.length;lbShow()};
+lb.querySelector('.lbnext').onclick=()=>{lbI=(lbI+1)%lbList.length;lbShow()};
+lb.querySelector('.lbfit').onclick=e=>{lb.classList.toggle('full');e.target.textContent=lb.classList.contains('full')?'화면에 맞춤':'원래 크기'};
+addEventListener('keydown',e=>{if(lb.hidden)return;if(e.key==='Escape')closeLB();if(e.key==='ArrowRight')lb.querySelector('.lbnext').click();if(e.key==='ArrowLeft')lb.querySelector('.lbprev').click()});
+app.addEventListener('click',e=>{const z=e.target.closest('.zoomable');if(z){openLB(JSON.parse(z.dataset.lb),+(z.dataset.start||0))}});
+const cur=document.createElement('div');cur.className='cur';cur.setAttribute('aria-hidden','true');document.body.appendChild(cur);
+let curFace='(=u=)';cur.textContent=curFace;
+const nextFace=()=>{let f;do{f=ALL_FACES[Math.floor(Math.random()*ALL_FACES.length)]}while(f===curFace);curFace=f;cur.textContent=f};
+const moveCur=(x,y)=>{cur.style.transform=`translate(${x+14}px,${y+14}px)`};
+addEventListener('pointermove',e=>{if(e.pointerType==='mouse')moveCur(e.clientX,e.clientY)});
+addEventListener('pointerdown',e=>{nextFace();moveCur(e.clientX,e.clientY);if(e.pointerType!=='mouse'){cur.classList.add('tap');clearTimeout(cur._t);cur._t=setTimeout(()=>cur.classList.remove('tap'),900)}});
+const setFace=m=>{const[e,d]=EYE[curView];face.textContent=`!(${e}${m||d}${e})♡`};
+app.addEventListener('click',e=>{const r=e.target.closest('tr[data-go]');if(r&&!e.target.closest('a'))location.hash=r.dataset.go});
+app.addEventListener('keydown',e=>{const r=e.target.closest('tr[data-go]');if(r&&e.key==='Enter')location.hash=r.dataset.go});
+addEventListener('hashchange',route);route();
+}
+</script>
+</body>
+</html>
