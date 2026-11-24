@@ -309,6 +309,10 @@ const PROJECTS=[{
     {label:'스티커 · 뱃지 · 명함',span:6,ratio:'1/1',src:null,alt:''}
   ],
   photoCredit:'', /* 사진 촬영자 이름. 비어 있으면 크레딧에 안 나옴 */
+  /* 회고: 사용자 답변(2026.11.24)을 -다체로 정리. 없는 실패·성과를 더하지 않음 */
+  retro:['네 매체 중 가장 잘 풀렸다고 생각하는 것은 《소소》다. 이야기 100가지를 빠짐없이 하나하나 꼼꼼히 읽을 수 있는 매체이기 때문이다. 반대로 시간이 더 있었다면 《찬찬》의 구성을 훨씬 알차게 채웠을 것이다.',
+    '만들면서 생각이 바뀐 지점도 있다. 실험하려던 결과를 직접 보고 나니, 형식이 붙들고 있는 것이 생각보다 훨씬 많았다. 내용보다 형식이 먼저 말을 걸었다.',
+    '《권위적인 책》에서 넘어오며 권위는 내려놓았고, 형식이 태도를 바꾼다는 생각은 끝까지 붙들었다. 다음에는 누가 봐도 그 형식인데 완전히 파괴된 매체를 만들어보고 싶다. 멈춰 둔 《권위적인 책》도 완성해보고 싶다.'],
   credit:[['기획·글·편집·디자인','이채민']]
 }];
 
@@ -396,6 +400,7 @@ function project(p){
     ${p.extras.map(e=>`<div>${e.imgs?`<button class="zoomable cards" style="--cols:${e.cols||2}" type="button" data-lb='${esc(JSON.stringify(e.imgs.map(x=>[x])))}' aria-label="${esc(e.name)} 크게 보기">${e.imgs.slice(0,e.show||e.imgs.length).map(x=>`<img src="${esc(x)}" alt="" loading="lazy" style="aspect-ratio:${e.ratio}">`).join('')}</button>`:e.img?ph(e.img,e.ratio,e.name):''}<h4>${esc(e.name)} <span class="dim">${esc(e.kind)}</span></h4><p class="small dim">${esc(e.text)}</p></div>`).join('')}
   </div></div></div></section>
   ${photosSection(p)}
+  ${p.retro?`<section class="pad"><div class="grid"><div class="label">회고</div><div class="body">${p.retro.map(t=>`<p>${esc(t)}</p>`).join('')}</div></div></section>`:''}
   <section class="pad"><div class="grid"><div class="label">크레딧</div><div class="body">${dl(p.photoCredit?[...p.credit,['사진',p.photoCredit]]:p.credit)}</div></div>
     <div class="next"><a href="#work">← Work</a><a href="#about">About</a></div></section>`;
 }
