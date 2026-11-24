@@ -52,10 +52,10 @@ h1,h2,h3,h4{font-weight:var(--w);margin:0}
 
 header{position:sticky;top:0;z-index:5;background:var(--bg);padding-top:30px;padding-bottom:30px;transition:background-color .35s}
 header .grid{align-items:baseline}
-.who{grid-column:span 7}.who .face{color:var(--ac);margin-left:1em}.who .dim{margin-left:1em}
+.who{grid-column:span 7}.who .face{color:var(--ac);margin-left:1em}.who .role{margin-left:1em}
 nav{grid-column:span 5;display:flex;justify-content:flex-end;gap:28px}
 nav a[aria-current]{color:var(--ac);text-decoration:none}
-@media(max-width:760px){.who{grid-column:span 4}.who .dim{display:none}nav{grid-column:span 4;justify-content:flex-start;gap:20px}}
+@media(max-width:760px){.who{grid-column:span 4}.who .role{display:none}nav{grid-column:span 4;justify-content:flex-start;gap:20px}}
 
 section{padding-top:clamp(56px,10vh,120px);padding-bottom:clamp(56px,10vh,120px)}
 .label{grid-column:span 3;color:var(--dim)}
@@ -202,7 +202,7 @@ footer{padding-top:30px;padding-bottom:30px;display:flex;justify-content:space-b
 </head>
 <body data-theme="white">
 <header class="pad"><div class="grid">
-  <a class="who" href="#work"><span>이채민</span><span class="face" aria-hidden="true"></span><span>Visual Designer</span></a>
+  <a class="who" href="#work"><span>이채민</span><span class="face" aria-hidden="true"></span><span class="role">Visual Designer</span></a>
   <nav><a href="#work" data-v="work">Work</a><a href="#about" data-v="about">About</a><a href="#contact" data-v="contact">Contact</a></nav>
 </div></header>
 <main id="app"></main>
